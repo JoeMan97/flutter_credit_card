@@ -16,6 +16,10 @@ class CreditCardForm extends StatefulWidget {
     this.themeColor,
     this.textColor = Colors.black,
     this.cursorColor,
+    this.labelStyle = const TextStyle(fontSize: 18.0),
+    this.inputSeparationHeight = 18.0,
+    this.useUnderlineInputBorder = false,
+    this.useYearWithFourDigits = false,
     this.localizedText = const LocalizedText(),
   })  : assert(localizedText != null),
         super(key: key);
@@ -28,6 +32,10 @@ class CreditCardForm extends StatefulWidget {
   final Color themeColor;
   final Color textColor;
   final Color cursorColor;
+  final TextStyle labelStyle;
+  final double inputSeparationHeight;
+  final bool useUnderlineInputBorder;
+  final bool useYearWithFourDigits;
   final LocalizedText localizedText;
 
   @override
@@ -48,7 +56,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
   final MaskedTextController _cardNumberController =
       MaskedTextController(mask: '0000 0000 0000 0000');
   final TextEditingController _expiryDateController =
-      MaskedTextController(mask: '00/00');
+      MaskedTextController(mask: '00/0000');
   final TextEditingController _cardHolderNameController =
       TextEditingController();
   final TextEditingController _cvvCodeController =
@@ -129,84 +137,108 @@ class _CreditCardFormState extends State<CreditCardForm> {
       ),
       child: Form(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
-              child: TextFormField(
-                controller: _cardNumberController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
-                ),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: widget.localizedText.cardNumberLabel,
-                  hintText: widget.localizedText.cardNumberHint,
-                ),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
+            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cardNumberLabel, style: widget.labelStyle) : null,
+            TextFormField(
+              controller: _cardNumberController,
+              cursorColor: widget.cursorColor ?? themeColor,
+              style: TextStyle(
+                color: widget.textColor,
               ),
+              decoration: (widget.useUnderlineInputBorder) ?
+              InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 12.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: themeColor),
+                ),
+                hintText: widget.localizedText.cardNumberHint,
+              ) :
+              InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: widget.localizedText.cardNumberLabel,
+                hintText: widget.localizedText.cardNumberHint,
+              ),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-              child: TextFormField(
-                controller: _expiryDateController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
-                ),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: widget.localizedText.expiryDateLabel,
-                  hintText: widget.localizedText.expiryDateHint,
-                ),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
+            SizedBox(height: widget.inputSeparationHeight),
+            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.expiryDateLabel, style: widget.labelStyle) : null,
+            TextFormField(
+              controller: _expiryDateController,
+              cursorColor: widget.cursorColor ?? themeColor,
+              style: TextStyle(
+                color: widget.textColor,
               ),
+              decoration: (widget.useUnderlineInputBorder) ?
+              InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 12.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: themeColor),
+                ),
+                hintText: widget.localizedText.expiryDateHint,
+              ) :
+              InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: widget.localizedText.expiryDateLabel,
+                hintText: widget.localizedText.expiryDateHint,
+              ),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-              child: TextField(
-                focusNode: cvvFocusNode,
-                controller: _cvvCodeController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
-                ),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: widget.localizedText.cvvLabel,
-                  hintText: widget.localizedText.cvvHint,
-                ),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
-                onChanged: (String text) {
-                  setState(() {
-                    cvvCode = text;
-                  });
-                },
+            SizedBox(height: widget.inputSeparationHeight),
+            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cvvLabel, style: widget.labelStyle) : null,
+            TextField(
+              focusNode: cvvFocusNode,
+              controller: _cvvCodeController,
+              cursorColor: widget.cursorColor ?? themeColor,
+              style: TextStyle(
+                color: widget.textColor,
               ),
+              decoration: (widget.useUnderlineInputBorder) ?
+              InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 12.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: themeColor),
+                ),
+                hintText: widget.localizedText.cvvHint,
+              ) :
+              InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: widget.localizedText.cvvLabel,
+                hintText: widget.localizedText.cvvHint,
+              ),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              onChanged: (String text) {
+                setState(() {
+                  cvvCode = text;
+                });
+              },
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
-              child: TextFormField(
-                controller: _cardHolderNameController,
-                cursorColor: widget.cursorColor ?? themeColor,
-                style: TextStyle(
-                  color: widget.textColor,
-                ),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: widget.localizedText.cardHolderLabel,
-                  hintText: widget.localizedText.cardHolderHint,
-                ),
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
+            SizedBox(height: widget.inputSeparationHeight),
+            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cardHolderLabel, style: widget.labelStyle) : null,
+            TextFormField(
+              controller: _cardHolderNameController,
+              cursorColor: widget.cursorColor ?? themeColor,
+              style: TextStyle(
+                color: widget.textColor,
               ),
+              decoration: (widget.useUnderlineInputBorder) ?
+              InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 12.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: themeColor),
+                ),
+                hintText: widget.localizedText.cardHolderHint,
+              ) :
+              InputDecoration(
+                border: const OutlineInputBorder(),
+                labelText: widget.localizedText.cardHolderLabel,
+                hintText: widget.localizedText.cardHolderHint,
+              ),
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.next,
             ),
           ],
         ),
