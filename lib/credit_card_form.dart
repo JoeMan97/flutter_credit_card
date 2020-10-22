@@ -139,7 +139,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cardNumberLabel, style: widget.labelStyle) : null,
+            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cardNumberLabel, style: widget.labelStyle) : Container(),
             TextFormField(
               controller: _cardNumberController,
               cursorColor: widget.cursorColor ?? themeColor,
@@ -163,7 +163,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: widget.inputSeparationHeight),
-            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.expiryDateLabel, style: widget.labelStyle) : null,
+            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.expiryDateLabel, style: widget.labelStyle) : Container(),
             TextFormField(
               controller: _expiryDateController,
               cursorColor: widget.cursorColor ?? themeColor,
@@ -187,7 +187,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: widget.inputSeparationHeight),
-            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cvvLabel, style: widget.labelStyle) : null,
+            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cvvLabel, style: widget.labelStyle) : Container(),
             TextField(
               focusNode: cvvFocusNode,
               controller: _cvvCodeController,
@@ -217,7 +217,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
               },
             ),
             SizedBox(height: widget.inputSeparationHeight),
-            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cardHolderLabel, style: widget.labelStyle) : null,
+            (widget.useUnderlineInputBorder) ? Text(widget.localizedText.cardHolderLabel, style: widget.labelStyle) : Container(),
             TextFormField(
               controller: _cardHolderNameController,
               cursorColor: widget.cursorColor ?? themeColor,
